@@ -123,7 +123,7 @@ module RailsSettings
       end
 
       def rails_initialized?
-        Rails.application&.initialized?
+        Rails.application.try(:initialized?)
       end
 
       def _all_settings
