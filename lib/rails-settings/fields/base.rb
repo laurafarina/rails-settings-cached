@@ -3,12 +3,17 @@ module RailsSettings
     class Base < Struct.new(:scope, :key, :default, :parent, :readonly, :separator, :type, :options)
       SEPARATOR_REGEXP = /[\n,;]+/
 
-      def initialize(scope:, key:, default:, parent:, readonly:, separator:, type:, options:)
-        super
-        self.readonly = !!readonly
-        self.type ||= :string
-        self.separator ||= SEPARATOR_REGEXP
-      end
+        # def initialize(scope:, key:, default:, parent:, readonly:, separator:, type:, options:)
+        def initialize(args = {})
+          self.scope = args[:scope]
+          self.key = args[:key]
+          self.default = args[:default]
+          self.parent = args[:parent]
+          self.readonly = !!args[:readonly]
+          self.separator = args[:separator] || SEPARATOR_REGEXP
+          self.type = args[:type] || :string
+          self.options = args[:options]
+        end
 
       def save!(value:)
         serialized_value = serialize(value)
