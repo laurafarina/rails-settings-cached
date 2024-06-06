@@ -17,7 +17,7 @@ module RailsSettings
 
       def save!(value:)
         serialized_value = serialize(value)
-        parent_record = parent.find_by(var: key) || parent.new(var: key)
+        parent_record = parent.where(var: key).first || parent.new(var: key)
         parent_record.value = serialized_value
         parent_record.save!
         parent_record.value
