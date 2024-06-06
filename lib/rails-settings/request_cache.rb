@@ -2,25 +2,27 @@ module RailsSettings
   module RequestCacheGetter
     extend ActiveSupport::Concern
 
-    class << self
-      def enable!
-        Thread.current[:rails_settings_request_cache_enable] = true
-      end
+    def self.included(base)
+      class << self
+        def enable!
+          Thread.current[:rails_settings_request_cache_enable] = true
+        end
 
-      def disable!
-        Thread.current[:rails_settings_request_cache_enable] = nil
-      end
+        def disable!
+          Thread.current[:rails_settings_request_cache_enable] = nil
+        end
 
-      def enabled?
-        Thread.current[:rails_settings_request_cache_enable]
-      end
+        def enabled?
+          Thread.current[:rails_settings_request_cache_enable]
+        end
 
-      def all_settings
-        enabled? ? settings : nil
-      end
+        def all_settings
+          enabled? ? settings : nil
+        end
 
-      def all_settings=(val)
-        self.settings = val
+        def all_settings=(val)
+          self.settings = val
+        end
       end
     end
   end
